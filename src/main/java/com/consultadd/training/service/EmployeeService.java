@@ -45,4 +45,8 @@ public class EmployeeService {
         //employeeRepository.
         return employee;
     }
+    public List<Employee> getCustomEmployeeList(){
+        return employeeRepository.getCustomEmployee();
+    }
+
 }

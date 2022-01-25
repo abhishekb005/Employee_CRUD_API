@@ -39,5 +39,8 @@ public class EmployeeController {
     public Employee patchEmployee(@RequestBody Employee employee){
         return employeeService.patchEmployee(employee);
     } 
-
+    @GetMapping("/custom")
+    public List<Employee> getCustomEmployeeList(){
+        return employeeService.getCustomEmployeeList();
+    }
 }
