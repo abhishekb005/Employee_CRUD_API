@@ -20,6 +20,7 @@ public class EmployeeService {
         System.out.println(employeeRepository.getClass());
         return employeeList;
     }
+
     public String saveEmployee(Employee employee){
         if(employeeRepository.existsById(employee.getId())){
             return "Employee already Exist";
@@ -27,6 +28,7 @@ public class EmployeeService {
         employeeRepository.save(employee);
         return "Employee Info Saved Succesfully";
     }
+
     public String updateEmployee(Employee employee){
         if(employeeRepository.existsById(employee.getId())){
             employeeRepository.save(employee);
@@ -34,6 +36,7 @@ public class EmployeeService {
         }
         return "Employee Not Found";
     }
+    
     public String deleteEmployee(String id){
         if(employeeRepository.existsById(id)){
             employeeRepository.deleteById(id);
@@ -41,8 +44,10 @@ public class EmployeeService {
         }
         return "Employee Not Found";
     }
-    public Employee patchEmployee(Employee employee){
+    public Employee createEmployee(){
         //employeeRepository.
+        Employee employee=new Employee("2", "abhi2", "pass", "ADMIN", true, "abhishek", 22);
+        employeeRepository.save(employee);
         return employee;
     }
 }
