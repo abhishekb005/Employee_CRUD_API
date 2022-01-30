@@ -1,25 +1,27 @@
 package com.consultadd.training.config;
 
+import com.consultadd.training.filter.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 @EnableWebSecurity
 public class MyConfig extends WebSecurityConfigurerAdapter{
 
     @Autowired
-    UserDetailsService userDetailsService;
+    private JwtRequestFilter jwtRequestFilter;
+
+    @Autowired
+    private MyUserDetailsService userDetailsService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -29,18 +31,30 @@ public class MyConfig extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-        .antMatchers("/addEmployee").hasAuthority("ADMIN")
+        http.csrf().disable()
+        .authorizeRequests()
+        .antMatchers("/createEmployee").permitAll()
+        .antMatchers("/authenticate").permitAll()
+        .antMatchers("/addEmployee").hasRole("ADMIN")
         .antMatchers("/deleteEmployee/**").hasAuthority("ADMIN")
         .antMatchers("/updateEmployee").hasAnyAuthority("ADMIN","USER")
-        .antMatchers(HttpMethod.GET,"/getEmployee").hasAuthority("ADMIN")
-        .antMatchers("/createEmployee").permitAll()
-        .and().csrf().disable()
-        .formLogin();
+       .antMatchers(HttpMethod.GET,"/getEmployee").hasRole("ADMIN")
+        
+        .anyRequest().authenticated().and()
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.addFilterBefore(jwtRequestFilter,UsernamePasswordAuthenticationFilter.class);
+        
     }
+    
     @Bean
     public PasswordEncoder passwordEncoder(){
         return  NoOpPasswordEncoder.getInstance();
+    }
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        // TODO Auto-generated method stub
+        return super.authenticationManagerBean();
     }
     
 }

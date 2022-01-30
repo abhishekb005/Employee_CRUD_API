@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 
 public class MyUserDetails implements UserDetails{
-
+    String ROLE_PREFIX = "ROLE_";
     private Employee employee;
 
     public MyUserDetails(Employee employee) {
@@ -21,7 +21,7 @@ public class MyUserDetails implements UserDetails{
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // TODO Auto-generated method stub
-        SimpleGrantedAuthority simpleGrantedAuthority=new SimpleGrantedAuthority(employee.getRole());
+        SimpleGrantedAuthority simpleGrantedAuthority=new SimpleGrantedAuthority(ROLE_PREFIX + employee.getRole());
         System.out.println(employee.getRole());
         System.out.println(List.of(simpleGrantedAuthority).toString());
         return List.of(simpleGrantedAuthority);   
