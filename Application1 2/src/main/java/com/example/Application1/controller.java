@@ -18,12 +18,12 @@ public class controller {
     @Autowired
     private service myservice;
 
-    @PostMapping("/h")
+    @PostMapping("/sendData")
     public CommonData home(){
        CommonData res=new CommonData();
         //System.out.println(liveUserConfig.getUsername());
         try {
-            res=myservice.app1(new CommonData(1,"app1"));
+            res=myservice.sendMyCommonData(new CommonData(1,"app1"));
             System.out.print(res);
         } catch (Exception e) {
             System.out.println(e);

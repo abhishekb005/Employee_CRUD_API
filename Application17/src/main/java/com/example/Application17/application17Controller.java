@@ -8,22 +8,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class application17Controller {
-    @PostMapping("/hello")
+    @PostMapping("/recieveData")
     public CommonData home(@RequestBody CommonData req){
         //System.out.println(liveUserConfig.getUsername());
         System.out.println(req.toString());
         return new CommonData(2, "data");
     }
-    @GetMapping("/he")
-    public String hel(){
-        //System.out.println(liveUserConfig.getUsername());
-      //  System.out.println(req);
-        return "hello";
-    }
+    
     @GetMapping("/")
     public String home1(){
-        //List<Employee> employeeList=
         
-    return "Hello Employee";
+    return "Hello ";
     }
 }

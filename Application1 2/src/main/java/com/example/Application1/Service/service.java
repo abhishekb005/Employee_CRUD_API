@@ -24,19 +24,14 @@ public class service {
                 .map(si -> si.getUri());
     }
 
-    public CommonData app1(CommonData str) throws ServiceUnavailableException{
+    public CommonData sendMyCommonData(CommonData str) throws ServiceUnavailableException{
         
-        /*//URI url = serviceUrl("payment-service");
-        URI url= discoveryClient.getInstances("payment-service").stream()
-                .map(a->a.getUri()).findFirst()
-                .map(s->s.resolve("/payment/doPay/")).get();
-        "http://payment-service/payment/doPay/" */
 
         URI url = serviceUrl("application17")
-                .map(s -> s.resolve("/hello"))
+                .map(s -> s.resolve("/recieveData"))
                 .orElseThrow(ServiceUnavailableException::new);
-        CommonData paymentRes = template.postForObject(url,
+        CommonData Response = template.postForObject(url,
                         str,CommonData.class);
-        return paymentRes;
+        return Response;
     }
 }
