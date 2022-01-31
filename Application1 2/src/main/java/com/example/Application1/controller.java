@@ -12,7 +12,7 @@ import javax.naming.ServiceUnavailableException;
 
 import com.example.Application1.Model.CommonData;
 import com.example.Application1.Service.service;
-
+//Send Data to application17
 @RestController
 public class controller {
     @Autowired
