@@ -20,6 +20,7 @@ public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
     
+    
   //Retrieve List of All Employee
     @GetMapping("/getEmployee")
     public List<Employee> getEmployee(){
@@ -47,6 +48,12 @@ public class EmployeeController {
         //List<Employee> employeeList=
         Employee emp=employeeService.createEmployee();
     return "Employee Created";
+    }
+    @GetMapping("/")
+    public String home(){
+        //List<Employee> employeeList=
+        
+    return "Hello Employee";
     }
     // @PatchMapping("/patchEmployee")
     // public Employee patchEmployee(@RequestBody Employee employee){
